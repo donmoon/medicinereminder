@@ -5,24 +5,24 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Medicine Reminder Widget"
+        android:text="@string/title_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/nameText"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="name" >
+        android:hint="@string/name_text" >
 
         <requestFocus />
     </EditText>
 
     <Spinner
-        android:id="@+id/frequencyText"
+        android:id="@+id/frequency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
@@ -32,17 +32,17 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/noticeText"
+            android:id="@+id/notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="notice"
+            android:text="@string/notice_text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ToggleButton
-            android:id="@+id/noticeSwitch"
+            android:id="@+id/notice_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="noticeSwitch" />
+            android:text="@string/notice_switch_text" />
 
     </LinearLayout>
 
@@ -51,16 +51,16 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/createButton"
+            android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="create widget" />
+            android:text="@string/ok_button_text" />
 
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cancel" />
+            android:text="@string/cancel_button_text" />
 
     </LinearLayout>
 
