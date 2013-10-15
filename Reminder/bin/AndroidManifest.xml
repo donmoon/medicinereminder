@@ -12,13 +12,19 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name">
-
+        <activity
+            android:name="edu.sysu.reminder.WidgetConfigure"
+            android:label="@string/app_name" >
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"    />
+			</intent-filter>
+        </activity>
         <receiver android:name="edu.sysu.reminder.WidgetProvider" >
 		    <intent-filter>
+		        <action android:name="edu.sysu.reminder.click" />
 		        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 		    </intent-filter>
-		    <meta-data android:name="android.appwidget.provider"
-		               android:resource="@xml/widget_info" />
+		    <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info" />
 		</receiver>
     </application>
 

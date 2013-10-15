@@ -7,6 +7,12 @@
     <string name="notice_switch_text">notice switch</string>
     <string name="ok_button_text">Create Widget</string>
     <string name="cancel_button_text">Cancel</string>
-    
+    <string name="frequency_prompt">frequency:：</string> 
+    <string-array name="frequency_arry"> 
+         <item>3times/day</item> 
+        <item>twice/day</item> 
+        <item>once/day</item> 
+    </string-array> 
+
 
 </resources>

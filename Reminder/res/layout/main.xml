@@ -25,6 +25,8 @@
         android:id="@+id/frequency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:prompt="@string/frequency_prompt" 
+        android:entries="@array/frequency_arry"
         />
 
     <LinearLayout
