@@ -1,13 +1,14 @@
 package edu.sysu.reminder;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import edu.sysu.reminder.service.*;
 
 
 
@@ -17,7 +18,8 @@ public class WidgetConfigure extends Activity {
 	private Button cancelButton;
 	private Spinner freqSpinner;
 	private int freq = 0;
-	private String name;
+	private static final String CLICK_ACTION = "edu.sysu.reminder.click";
+	private static final int[] widgets = {R.drawable.widget0, R.drawable.widget1, R.drawable.widget2, R.drawable.widget3};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,22 +83,38 @@ public class WidgetConfigure extends Activity {
 	    	finish();
 	    }
 	    //Perform your App Widget configuration.
-	     
+	    
+//	     final SharedPreferences config = getSharedPreferences("widgetconfig", 0);
+//	     SharedPreferences.Editor configEditor = config.edit();
+//		 configEditor.putInt(String.format("frequency", mAppWidgetId), freq);
+//	 	 configEditor.putString(String.format("name", mAppWidgetId), nameText.getText().toString());
+//		 configEditor.commit();
+//		 Log.v("id1", Integer.toString(mAppWidgetId));
+//		 Log.v("name1", nameText.getText().toString()); 
 	     
 	    //When the configuration is complete, get an instance of the AppWidgetManager by calling getInstance(Context):
-	    final Context context = WidgetConfigure.this;
-	    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-	     
-	    final SharedPreferences config = getSharedPreferences("widgetconfig", 0);
-	    SharedPreferences.Editor configEditor = config.edit();
-		configEditor.putInt(String.format("frequency", mAppWidgetId), freq);
-		configEditor.putString(String.format("name", mAppWidgetId), nameText.getText().toString());
-		configEditor.commit();
-		
+		final Context context = WidgetConfigure.this;
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
 	    // Update the App Widget with a RemoteViews layout by calling updateAppWidget(int, RemoteViews):
+		RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.widget);
 
-	    		 
+    	Intent intentClick = new Intent(CLICK_ACTION);
+    	intentClick.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, mAppWidgetId, intentClick, 0);
+        views.setOnClickPendingIntent(R.id.Button, pendingIntent);
+        
+//        SharedPreferences config = context.getSharedPreferences("widgetconfig", 0);
+//        String name = config.getString(String.format("name", appWidgetId), "widget");
+//        frequency = config.getInt(String.format("frequency", appWidgetId),0);
+//        Log.v("id2", Integer.toString(appWidgetId));
+//        Log.v("name2", name);
+        views.setTextViewText(R.id.widget_name, nameText.getText().toString());
+        views.setImageViewResource(R.id.Button, widgets[freq+1]);
+		appWidgetManager.updateAppWidget(mAppWidgetId, views);
+	    
+		Status.sta = freq+1;
+		Status.init = freq+1;
 	    //Finally, create the return Intent, set it with the Activity result, and finish the Activity:
 	    Intent resultValue = new Intent();
 	    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
