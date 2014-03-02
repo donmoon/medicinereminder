@@ -1,13 +1,16 @@
 package edu.sysu.reminder;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.*;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import edu.sysu.reminder.service.*;
 
 
@@ -17,7 +20,9 @@ public class WidgetConfigure extends Activity {
 	private Button okButton;
 	private Button cancelButton;
 	private Spinner freqSpinner;
-	private int freq = 0;
+	private ToggleButton noticeToggle;
+	private Boolean isNoticeOn = false;
+	private int freq = 2;
 	private static final String CLICK_ACTION = "edu.sysu.reminder.click";
 	private static final int[] widgets = {R.drawable.widget0, R.drawable.widget1, R.drawable.widget2, R.drawable.widget3};
 	
@@ -46,6 +51,21 @@ public class WidgetConfigure extends Activity {
 			}
 	    	
 	    });
+	    
+	    noticeToggle = (ToggleButton)findViewById(R.id.notice_switch);
+	    noticeToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if (isChecked)
+					isNoticeOn = true;
+				else
+					isNoticeOn = false;
+			}
+	    	
+	    });
+	    
 	    cancelButton=(Button) findViewById(R.id.cancel_button);
 	    cancelButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -73,7 +93,7 @@ public class WidgetConfigure extends Activity {
 	    Intent intent = getIntent();
 	    Bundle extras = intent.getExtras();
 	    int mAppWidgetId = 0;
-	    if (extras != null) {
+	    if (extras != null) {                     
 	        mAppWidgetId = extras.getInt(
 	        		AppWidgetManager.EXTRA_APPWIDGET_ID, 
 	                AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -83,14 +103,14 @@ public class WidgetConfigure extends Activity {
 	    	finish();
 	    }
 	    //Perform your App Widget configuration.
-	    
+
+		
 //	     final SharedPreferences config = getSharedPreferences("widgetconfig", 0);
 //	     SharedPreferences.Editor configEditor = config.edit();
 //		 configEditor.putInt(String.format("frequency", mAppWidgetId), freq);
 //	 	 configEditor.putString(String.format("name", mAppWidgetId), nameText.getText().toString());
 //		 configEditor.commit();
-//		 Log.v("id1", Integer.toString(mAppWidgetId));
-//		 Log.v("name1", nameText.getText().toString()); 
+
 	     
 	    //When the configuration is complete, get an instance of the AppWidgetManager by calling getInstance(Context):
 		final Context context = WidgetConfigure.this;
@@ -107,14 +127,13 @@ public class WidgetConfigure extends Activity {
 //        SharedPreferences config = context.getSharedPreferences("widgetconfig", 0);
 //        String name = config.getString(String.format("name", appWidgetId), "widget");
 //        frequency = config.getInt(String.format("frequency", appWidgetId),0);
-//        Log.v("id2", Integer.toString(appWidgetId));
-//        Log.v("name2", name);
+
         views.setTextViewText(R.id.widget_name, nameText.getText().toString());
         views.setImageViewResource(R.id.Button, widgets[freq+1]);
 		appWidgetManager.updateAppWidget(mAppWidgetId, views);
 	    
-		Status.sta = freq+1;
-		Status.init = freq+1;
+		Status.set(freq+1, freq+1, isNoticeOn);
+		
 	    //Finally, create the return Intent, set it with the Activity result, and finish the Activity:
 	    Intent resultValue = new Intent();
 	    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

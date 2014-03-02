@@ -26,6 +26,8 @@
 		    </intent-filter>
 		    <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info" />
 		</receiver>
+        <service android:name="edu.sysu.reminder.service.UpdateService"></service>
+        
     </application>
-
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 </manifest>

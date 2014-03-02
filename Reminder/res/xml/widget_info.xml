@@ -4,6 +4,7 @@
     android:minHeight="32dp"
     android:initialLayout="@layout/widget"
     android:configure="edu.sysu.reminder.WidgetConfigure" 
+    android:updatePeriodMillis="0"
    
     >
 </appwidget-provider>
